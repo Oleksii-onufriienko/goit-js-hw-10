@@ -1,6 +1,6 @@
 import './css/styles.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import fetchCountries from './fetchCountries';
+import { fetchCountries } from './fetchCountries';
 
 var debounce = require('lodash.debounce');
 
@@ -16,21 +16,18 @@ refs.searchBox.addEventListener('input', debounce(search, DEBOUNCE_DELAY));
 
 function search(event) {
   const searchCountryName = event.target.value.trim();
-  if (searchCountryName === '') {
-    resetMarkup();
-    return;
-  }
+
+  resetMarkup();
+
+  if (searchCountryName === '') return;
 
   fetchCountries(searchCountryName)
     .then(countryArray => {
-      //   if (countryArray.length === 0) throw new Error(countryArray.status);
       if (countryArray.length > 10) {
         Notify.info(
           'Too many matches found. Please enter a more specific name.'
         );
-        resetMarkup();
         return;
-        // throw new Error(countryArray.status);
       }
       if (countryArray.length > 2) {
         renderCountriesList(countryArray);
@@ -39,8 +36,7 @@ function search(event) {
       renderOneCoutry(countryArray[0]);
     })
     .catch(() => {
-      Notify.failure('Oops, there is no country with that name');
-      resetMarkup();
+      Notify.failure('Oops, there is no country with that name.');
     });
 }
 
@@ -59,8 +55,7 @@ function renderCountriesList(countries) {
 
 function renderOneCoutry(country) {
   const languages = Object.values(country.languages).join(',');
-
-  const markup = `<li>
+  const markup = `
         <div class="countryBox-name-flag">
           <img class="country-flag" src="${country.flags.svg}" alt="" />
           <p class="country-name">${country.name.common}</p>
@@ -68,11 +63,12 @@ function renderOneCoutry(country) {
         <p class="country-info"><b>Capital: </b>${country.capital}</p>
         <p class="country-info"><b>Population: </b>${country.population}</p>
         <p class="country-info"><b>Languages: </b>${languages}</p>
-      </li>`;
+      `;
 
-  refs.countryList.innerHTML = markup;
+  refs.countryInfo.innerHTML = markup;
 }
 
 const resetMarkup = () => {
   refs.countryList.innerHTML = '';
+  refs.countryInfo.innerHTML = '';
 };

@@ -1,12 +1,15 @@
-export default function fetchCountries(name) {
-  const inPoint = 'https://restcountries.com/v3.1/name/';
-  const searchString =
-    inPoint + name + '?fields=name,capital,population,flags,languages';
+export { fetchCountries };
 
-  return fetch(searchString)
-    .then(result => result.json())
-    .catch(result => {
-      console.log('Это ошибка!', result);
-      return result.status;
-    });
+const IN_POINT = 'https://restcountries.com/v3.1/name/';
+const FIELDS_REQUEST = '?fields=name,capital,population,flags,languages';
+
+function fetchCountries(searchName) {
+  const searchString = IN_POINT + searchName + FIELDS_REQUEST;
+
+  return fetch(searchString).then(result => {
+    if (!result.ok) {
+      throw Error();
+    }
+    return result.json();
+  });
 }

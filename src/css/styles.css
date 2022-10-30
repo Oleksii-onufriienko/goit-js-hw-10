@@ -25,6 +25,7 @@ body {
 
 .list-item {
   display: flex;
+  align-items: center;
 }
 
 .countries-name {
@@ -33,15 +34,16 @@ body {
 }
 
 .country-list-flag {
-  max-width: 44px;
+  max-width: 50px;
 }
 
 .countryBox-name-flag {
   display: flex;
+  align-items: center;
 }
 
 .country-flag {
-  max-width: 65px;
+  max-width: 80px;
 }
 
 .country-name {
