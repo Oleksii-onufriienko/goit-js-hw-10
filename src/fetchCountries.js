@@ -1,11 +1,9 @@
 export { fetchCountries };
 
-const IN_POINT = 'https://restcountries.com/v3.1/name/';
-const FIELDS_REQUEST = '?fields=name,capital,population,flags,languages';
+const BASE_URL = 'https://restcountries.com/v3.1/name/';
 
 function fetchCountries(searchName) {
-  const searchString = IN_POINT + searchName + FIELDS_REQUEST;
-
+  const searchString = `${BASE_URL}${searchName}?fields=name,capital,population,flags,languages`;
   return fetch(searchString).then(result => {
     if (!result.ok) {
       throw Error();
