@@ -1,5 +1,6 @@
 import './css/styles.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import fetchCountries from './fetchCountries';
 
 var debounce = require('lodash.debounce');
 
@@ -53,7 +54,6 @@ function renderCountriesList(countries) {
 `;
     })
     .join('');
-  console.log(markup);
   refs.countryList.innerHTML = markup;
 }
 
@@ -71,14 +71,6 @@ function renderOneCoutry(country) {
       </li>`;
 
   refs.countryList.innerHTML = markup;
-}
-
-function fetchCountries(name) {
-  const inPoint = 'https://restcountries.com/v3.1/name/';
-  const searchString =
-    inPoint + name + '?fields=name,capital,population,flags,languages';
-
-  return fetch(searchString).then(result => result.json());
 }
 
 const resetMarkup = () => {
